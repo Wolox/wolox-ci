@@ -1,7 +1,7 @@
 package com.wolox.parser;
 
 import com.wolox.ProjectConfiguration;
-import com.wolox.services;
+import com.wolox.services.*;
 import com.wolox.steps.*;
 
 class ConfigParser {
@@ -38,8 +38,8 @@ class ConfigParser {
     static def parseServices(def steps) {
         def services = [];
 
-        deps.each {
-            def instance = new "${it.capitalize()}"()
+        steps.each {
+            def instance = Eval.me("new ${it.capitalize()}()")
             services.add(instance)
         };
 
