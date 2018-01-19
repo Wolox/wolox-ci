@@ -1,7 +1,6 @@
 package com.wolox.steps;
 
 class Step {
-
-    List<String> commands;
+    List<String> commands = [];
     String name;
 }

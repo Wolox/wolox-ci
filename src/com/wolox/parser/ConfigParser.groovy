@@ -12,6 +12,8 @@ class ConfigParser {
         projectConfiguration.environment    = parseEnvironment(yaml.environment);
         projectConfiguration.steps          = parseSteps(yaml.steps);
         projectConfiguration.services   = parseServices(yaml.services);
+        projectConfiguration.dockerfile = parseDockerfile(yaml.config);
+        projectConfiguration.projectName = parseProjectName(yaml.config);
 
         return projectConfiguration;
     }
@@ -31,6 +33,7 @@ class ConfigParser {
             v.each {
                 step.commands.add(it);
             }
+            return step
         }
         return new Steps(steps: steps);
     }
@@ -39,12 +42,42 @@ class ConfigParser {
         def services = [];
 
         steps.each {
-            def instance = Eval.me("new ${it.capitalize()}()")
+            def instance = getServiceClass(it.capitalize())?.newInstance()
             services.add(instance)
         };
 
         services.add(new Base());
 
         return services
+    }
+
+    static def getServiceClass(def name) {
+        switch(name) {
+            case "Postgres":
+                return Postgres
+                break
+            case "Redis":
+                return Redis
+                break
+            case "Mssql":
+                return Mssql
+                break
+        }
+    }
+
+    static def parseDockerfile(def config) {
+        if (!config || !config["dockerfile"]) {
+            return "Dockerfile";
+        }
+
+        return config["dockerfile"];
+    }
+
+    static def parseProjectName(def config) {
+        if (!config || !config["project_name"]) {
+            return "woloxci-project";
+        }
+
+        return config["project_name"];
     }
 }

@@ -1,4 +1,4 @@
-package com.wolox.service;
+package com.wolox.services;
 
 class Redis {
     def getVar() {

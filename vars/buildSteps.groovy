@@ -1,12 +1,13 @@
 @Library('wolox-ci')
 import com.wolox.*;
+import com.wolox.steps.Step;
 
 def call(ProjectConfiguration projectConfig, def dockerImage) {
     return { variables ->
-        List<Step> steps = projectConfig.steps
+        List<Step> stepsA = projectConfig.steps.steps
         def links = variables.collect { k, v -> "--link ${v.id}:${k}" }.join(" ")
         dockerImage.inside(links) {
-            steps.each { step ->
+            stepsA.each { step ->
                 // def key = k.replace("_", " ");
                 // key = key.split(" ").collect { it.capitalize() }.join(" ")
                 stage(step.name) {

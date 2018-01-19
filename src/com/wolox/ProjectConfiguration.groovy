@@ -6,4 +6,6 @@ class ProjectConfiguration {
 	def environment;
 	def services;
 	Steps steps;
+	def dockerfile;
+	def projectName;
 }

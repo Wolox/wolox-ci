@@ -1,7 +1,7 @@
 @Library('wolox-ci')
 import com.wolox.*;
 
-def call(ProjectConfig ProjectConfig, def nextClosure) {
+def call(ProjectConfiguration projectConfig, def nextClosure) {
     return { variables ->
         /* Build redis image */
         docker.image('redis').withRun() { redis ->
