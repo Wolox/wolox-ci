@@ -9,10 +9,19 @@ class ConfigParser {
     static ProjectConfiguration parse(def yaml) {
         ProjectConfiguration projectConfiguration = new ProjectConfiguration();
 
+        // parse the environment variables
         projectConfiguration.environment    = parseEnvironment(yaml.environment);
+
+        // parse the execution steps
         projectConfiguration.steps          = parseSteps(yaml.steps);
+
+        // parse the necessary services
         projectConfiguration.services   = parseServices(yaml.services);
+
+        // load the dockefile
         projectConfiguration.dockerfile = parseDockerfile(yaml.config);
+
+        // load the project name
         projectConfiguration.projectName = parseProjectName(yaml.config);
 
         return projectConfiguration;
@@ -30,6 +39,7 @@ class ConfigParser {
         List<Step> steps = yamlSteps.collect { k, v ->
             Step step = new Step(name: k)
 
+            // a step can have one or more commands to execute    
             v.each {
                 step.commands.add(it);
             }
