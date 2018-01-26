@@ -6,8 +6,10 @@ import com.wolox.steps.*;
 
 class ConfigParser {
 
-    static ProjectConfiguration parse(def yaml) {
+    static ProjectConfiguration parse(def yaml, def buildNumber) {
         ProjectConfiguration projectConfiguration = new ProjectConfiguration();
+
+        projectConfiguration.buildNumber = buildNumber;
 
         // parse the environment variables
         projectConfiguration.environment    = parseEnvironment(yaml.environment);
