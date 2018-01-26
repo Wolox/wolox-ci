@@ -1,15 +1,16 @@
 package com.wolox.parser;
 
 import com.wolox.ProjectConfiguration;
+import com.wolox.docker.DockerConfiguration;
 import com.wolox.services.*;
 import com.wolox.steps.*;
 
 class ConfigParser {
 
-    static ProjectConfiguration parse(def yaml, def buildNumber) {
+    static ProjectConfiguration parse(def yaml, def env) {
         ProjectConfiguration projectConfiguration = new ProjectConfiguration();
 
-        projectConfiguration.buildNumber = buildNumber;
+        projectConfiguration.buildNumber = env.BUILD_ID;
 
         // parse the environment variables
         projectConfiguration.environment    = parseEnvironment(yaml.environment);
@@ -25,6 +26,10 @@ class ConfigParser {
 
         // load the project name
         projectConfiguration.projectName = parseProjectName(yaml.config);
+
+        projectConfiguration.env = env;
+
+        projectConfiguration.dockerConfiguration = new DockerConfiguration(projectConfiguration: projectConfiguration);
 
         return projectConfiguration;
     }
