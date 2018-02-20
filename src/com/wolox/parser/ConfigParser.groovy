@@ -46,7 +46,7 @@ class ConfigParser {
         List<Step> steps = yamlSteps.collect { k, v ->
             Step step = new Step(name: k)
 
-            // a step can have one or more commands to execute    
+            // a step can have one or more commands to execute
             v.each {
                 step.commands.add(it);
             }
@@ -59,11 +59,14 @@ class ConfigParser {
         def services = [];
 
         steps.each {
-            def instance = getServiceClass(it.capitalize())?.newInstance()
-            services.add(instance)
+            def service = it.tokenize(':')
+            def version = service.size() == 2 ? service.get(1) : 'latest'
+            def instance = getServiceClass(service.get(0).capitalize())?.newInstance()
+
+            services.add([service: instance, version: version])
         };
 
-        services.add(new Base());
+        services.add([service: new Base(), version: 'latest']);
 
         return services
     }
