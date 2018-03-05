@@ -7,6 +7,8 @@ import com.wolox.steps.*;
 
 class ConfigParser {
 
+    private static String LATEST = 'latest';
+
     static ProjectConfiguration parse(def yaml, def env) {
         ProjectConfiguration projectConfiguration = new ProjectConfiguration();
 
@@ -60,13 +62,13 @@ class ConfigParser {
 
         steps.each {
             def service = it.tokenize(':')
-            def version = service.size() == 2 ? service.get(1) : 'latest'
+            def version = service.size() == 2 ? service.get(1) : LATEST
             def instance = getServiceClass(service.get(0).capitalize())?.newInstance()
 
             services.add([service: instance, version: version])
         };
 
-        services.add([service: new Base(), version: 'latest']);
+        services.add([service: new Base(), version: LATEST]);
 
         return services
     }
