@@ -1,8 +1,8 @@
-@Library('wolox-ci')
 import com.wolox.parser.ConfigParser;
+import com.wolox.steps.Steps;
 import com.wolox.*;
 
-def call(String yamlName) {
+def call(String yamlName, def context = 'ci') {
     def yaml = readYaml file: yamlName;
 
     def buildNumber = Integer.parseInt(env.BUILD_ID)
@@ -15,8 +15,10 @@ def call(String yamlName) {
     // build the image specified in the configuration
     def customImage = docker.build(imageName, "--file ${projectConfig.dockerfile} .");
 
+    Steps steps = projectConfig.steps.find { it.context == context }
+
     // adds the last step of the build.
-    def closure = buildSteps(projectConfig, customImage);
+    def closure = buildSteps(steps.steps, customImage);
 
     // each service is a closure that when called it executes its logic and then calls a closure, the next step.
     projectConfig.services.each {

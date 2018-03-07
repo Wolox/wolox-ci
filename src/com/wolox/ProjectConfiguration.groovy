@@ -6,7 +6,7 @@ import com.wolox.steps.Steps;
 class ProjectConfiguration {
     def environment;
     def services;
-    Steps steps;
+    List<Steps> steps = [] as LinkedList ;
     def dockerfile;
     def projectName;
     def buildNumber;

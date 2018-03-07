@@ -1,4 +1,3 @@
-@Library('wolox-ci')
 import com.wolox.*;
 
 def call(ProjectConfiguration projectConfig, def version, def nextClosure) {

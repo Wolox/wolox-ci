@@ -18,7 +18,8 @@ class ConfigParser {
         projectConfiguration.environment    = parseEnvironment(yaml.environment);
 
         // parse the execution steps
-        projectConfiguration.steps          = parseSteps(yaml.steps);
+        projectConfiguration.steps.add(parseSteps(yaml.steps, 'ci'));
+        projectConfiguration.steps.add(parseSteps(yaml.deploy, 'deploy'));
 
         // parse the necessary services
         projectConfiguration.services   = parseServices(yaml.services);
@@ -44,7 +45,7 @@ class ConfigParser {
         return environment.collect { k, v -> "${k}=${v}"};
     }
 
-    static def parseSteps(def yamlSteps) {
+    static def parseSteps(def yamlSteps, def context) {
         List<Step> steps = yamlSteps.collect { k, v ->
             Step step = new Step(name: k)
 
@@ -54,7 +55,7 @@ class ConfigParser {
             }
             return step
         }
-        return new Steps(steps: steps);
+        return new Steps(steps: steps, context: context);
     }
 
     static def parseServices(def steps) {
