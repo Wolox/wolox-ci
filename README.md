@@ -23,7 +23,7 @@ This file looks something like this:
 ```
 config:
   dockerfile: .woloxci/Dockerfile
-  project_name: svl-products-rails
+  project_name: some-rails-project
 
 services:
   - mssql
