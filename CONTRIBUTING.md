@@ -15,3 +15,4 @@ within three business days (and, typically, one business day). We may suggest
 some changes or improvements or alternatives.
 
 Please make sure to write a [good commit message][commit] :D
+[commit]: http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html
