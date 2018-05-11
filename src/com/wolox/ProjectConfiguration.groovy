@@ -5,6 +5,7 @@ import com.wolox.steps.Steps;
 
 class ProjectConfiguration {
     def environment;
+    def environmentHash;
     def services;
     Steps steps;
     def dockerfile;
