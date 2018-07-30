@@ -84,6 +84,12 @@ class ConfigParser {
             case "Mssql":
                 return Mssql
                 break
+            case "Mysql":
+                return Mysql
+                break
+            case "Mongodb":
+                return Mongodb
+                break
         }
     }
 
