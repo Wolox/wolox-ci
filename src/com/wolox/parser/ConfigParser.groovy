@@ -16,6 +16,8 @@ class ConfigParser {
 
         // parse the environment variables
         projectConfiguration.environment    = parseEnvironment(yaml.environment);
+        // parse the environment variables
+        projectConfiguration.environmentHash    = parseEnvironmentHash(yaml.environment);
 
         // parse the execution steps
         projectConfiguration.steps          = parseSteps(yaml.steps);
@@ -42,6 +44,16 @@ class ConfigParser {
         }
 
         return environment.collect { k, v -> "${k}=${v}"};
+    }
+
+    static def parseEnvironmentHash(def environment) {
+        if (!environment) {
+            return "";
+        }
+
+        def map = [:]
+
+        return environment.each { k, v -> map[k] = v};
     }
 
     static def parseSteps(def yamlSteps) {
