@@ -74,6 +74,7 @@ class ConfigParser {
     }
 
     static def getServiceClass(def name) {
+        // TODO: Refactor this
         switch(name) {
             case "Postgres":
                 return Postgres
@@ -89,6 +90,9 @@ class ConfigParser {
                 break
             case "Mongodb":
                 return Mongodb
+                break
+            case "Elasticsearch":
+                return Elasticsearch
                 break
         }
     }

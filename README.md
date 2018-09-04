@@ -104,6 +104,12 @@ When listing `mongo` as a service, this will build a docker image from [`mongo`]
 3. DB_HOST
 4. DB_PORT
 
+### Elasticsearch
+
+When listing `elasticsearch:6.4.0` as a service (it's mandatory specify the image version), this will build a docker image from [`elasticsearch`](https://www.docker.elastic.co/) exposing the following environment variables:
+
+1. ELASTICSEARCH_URL
+
 ## Steps
 
 This section lets you define the steps you need to build your project. Each level inside the `steps` section is a stage in the Jenkins pipeline and each item in the stage is a command to run. In the case above, there are 5 stages named:
