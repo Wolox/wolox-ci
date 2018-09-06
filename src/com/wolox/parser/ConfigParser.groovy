@@ -8,6 +8,7 @@ import com.wolox.steps.*;
 class ConfigParser {
 
     private static String LATEST = 'latest';
+    private static Integer DEFAULT_TIMEOUT = 600;   // 600 seconds
 
     static ProjectConfiguration parse(def yaml, def env) {
         ProjectConfiguration projectConfiguration = new ProjectConfiguration();
@@ -32,6 +33,8 @@ class ConfigParser {
         projectConfiguration.env = env;
 
         projectConfiguration.dockerConfiguration = new DockerConfiguration(projectConfiguration: projectConfiguration);
+
+        projectConfiguration.timeout = yaml.timeout ?: DEFAULT_TIMEOUT;
 
         return projectConfiguration;
     }

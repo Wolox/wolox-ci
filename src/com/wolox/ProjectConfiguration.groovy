@@ -12,4 +12,5 @@ class ProjectConfiguration {
     def buildNumber;
     DockerConfiguration dockerConfiguration;
     def env;
+    def timeout;
 }

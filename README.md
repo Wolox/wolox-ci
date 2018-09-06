@@ -48,6 +48,8 @@ environment:
   GIT_COMMITTER_NAME: a
   GIT_COMMITTER_EMAIL: b
   LANG: C.UTF-8
+
+timeout: 600
 ```
 
 This file has different sections:
@@ -130,3 +132,7 @@ The analysis stage, for example, runs the following commands:
 ## Environment
 
 This section lets you set up custom environment variables. Each item inside this section defines a variable with its value.
+
+## Timeout
+
+This section lets you set up a custom timeout in seconds. The default is 600 (10 minutes).
