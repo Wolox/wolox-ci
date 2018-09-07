@@ -48,6 +48,8 @@ environment:
   GIT_COMMITTER_NAME: a
   GIT_COMMITTER_EMAIL: b
   LANG: C.UTF-8
+
+timeout: 600
 ```
 
 This file has different sections:
@@ -104,6 +106,12 @@ When listing `mongo` as a service, this will build a docker image from [`mongo`]
 3. DB_HOST
 4. DB_PORT
 
+### Elasticsearch
+
+When listing `elasticsearch:6.4.0` as a service (it's mandatory specify the image version), this will build a docker image from [`elasticsearch`](https://www.docker.elastic.co/) exposing the following environment variables:
+
+1. ELASTICSEARCH_URL
+
 ## Steps
 
 This section lets you define the steps you need to build your project. Each level inside the `steps` section is a stage in the Jenkins pipeline and each item in the stage is a command to run. In the case above, there are 5 stages named:
@@ -124,3 +132,7 @@ The analysis stage, for example, runs the following commands:
 ## Environment
 
 This section lets you set up custom environment variables. Each item inside this section defines a variable with its value.
+
+## Timeout
+
+This section lets you set up a custom timeout in seconds. The default is 600 (10 minutes).
