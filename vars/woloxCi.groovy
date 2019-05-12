@@ -28,6 +28,5 @@ def call(String yamlName) {
     try {
         closure([:]);
     } finally{
-        deleteDockerImages(projectConfig);
     }
 }
