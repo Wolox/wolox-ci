@@ -12,6 +12,11 @@ def call(String yamlName) {
 
     def imageName = projectConfig.dockerConfiguration.imageName().toLowerCase();
 
+    def line
+    new File(projectConfig.dockerfile).withReader { line = it.readLine() }
+
+    projectConfig.baseImage = line​​​​​​​.split("FROM ")​[1]​
+
     // build the image specified in the configuration
     def customImage = docker.build(imageName, "--file ${projectConfig.dockerfile} .");
 
