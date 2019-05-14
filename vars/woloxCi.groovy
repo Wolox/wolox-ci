@@ -12,6 +12,9 @@ def call(String yamlName) {
 
     def imageName = projectConfig.dockerConfiguration.imageName().toLowerCase();
 
+    printf "ls -l".execute().text
+    printf "ls -l .woloxci".execute().text
+
     def line
     new File(projectConfig.dockerfile).withReader { line = it.readLine() }
 
