@@ -27,6 +27,11 @@ class ConfigParser {
         // load the dockefile
         projectConfiguration.dockerfile = parseDockerfile(yaml.config);
 
+        def line
+        new File(projectConfiguration.dockerfile).withReader { line = it.readLine() }
+
+        projectConfiguration.baseImage = line​​​​​​​.split("FROM ")​[1]​
+
         // load the project name
         projectConfiguration.projectName = parseProjectName(yaml.config);
 
