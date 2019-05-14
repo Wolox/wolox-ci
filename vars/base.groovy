@@ -6,7 +6,7 @@ def call(ProjectConfiguration projectConfig, def _, def nextClosure) {
         podTemplate(label: 'base', containers: [
             containerTemplate(
                 name: 'base',
-                image: projectConfig.baseImage
+                image: projectConfig.baseImage)
         ],
         volumes: [
             hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock')
