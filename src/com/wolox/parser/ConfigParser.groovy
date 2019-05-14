@@ -28,7 +28,7 @@ class ConfigParser {
         projectConfiguration.dockerfile = parseDockerfile(yaml.config);
 
         def line
-        new File('Dockerfile').withReader { line = it.readLine() }
+        new File(projectConfiguration.dockerfile).withReader { line = it.readLine() }
 
         projectConfiguration.baseImage = line​​​​​​​.split("FROM ")​[1]​
 
