@@ -82,6 +82,9 @@ class ConfigParser {
             case "Postgres":
                 return Postgres
                 break
+            case "Postgis":
+                return Postgis
+                break
             case "Redis":
                 return Redis
                 break
