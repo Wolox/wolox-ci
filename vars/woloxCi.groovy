@@ -12,11 +12,16 @@ def call(String yamlName) {
 
     def imageName = projectConfig.dockerConfiguration.imageName().toLowerCase();
 
+    def file = readFile(projectConfig.dockerfile)
+    def from = file.split('\n')[0]
+
+    projectConfig.baseImage = from
+
     // build the image specified in the configuration
-    def customImage = docker.build(imageName, "--file ${projectConfig.dockerfile} .");
+    // def customImage = doscker.build(imageName, "--file ${projectConfig.dockerfile} .");
 
     // adds the last step of the build.
-    def closure = buildSteps(projectConfig, customImage);
+    def closure = buildSteps(projectConfig, null);
 
     // each service is a closure that when called it executes its logic and then calls a closure, the next step.
     projectConfig.services.each {
@@ -28,6 +33,5 @@ def call(String yamlName) {
     try {
         closure([:]);
     } finally{
-        deleteDockerImages(projectConfig);
     }
 }

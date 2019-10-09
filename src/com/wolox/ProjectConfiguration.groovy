@@ -13,4 +13,5 @@ class ProjectConfiguration {
     DockerConfiguration dockerConfiguration;
     def env;
     def timeout;
+    def baseImage;
 }
