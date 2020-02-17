@@ -1,15 +1,19 @@
 package com.wolox.parser;
 
 import com.wolox.ProjectConfiguration;
+import com.wolox.docker.DockerConfiguration;
 import com.wolox.services.*;
 import com.wolox.steps.*;
 
 class ConfigParser {
 
-    static ProjectConfiguration parse(def yaml, def buildNumber) {
+    private static String LATEST = 'latest';
+    private static Integer DEFAULT_TIMEOUT = 600;   // 600 seconds
+
+    static ProjectConfiguration parse(def yaml, def env) {
         ProjectConfiguration projectConfiguration = new ProjectConfiguration();
 
-        projectConfiguration.buildNumber = buildNumber;
+        projectConfiguration.buildNumber = env.BUILD_ID;
 
         // parse the environment variables
         projectConfiguration.environment    = parseEnvironment(yaml.environment);
@@ -26,6 +30,12 @@ class ConfigParser {
         // load the project name
         projectConfiguration.projectName = parseProjectName(yaml.config);
 
+        projectConfiguration.env = env;
+
+        projectConfiguration.dockerConfiguration = new DockerConfiguration(projectConfiguration: projectConfiguration);
+
+        projectConfiguration.timeout = yaml.timeout ?: DEFAULT_TIMEOUT;
+
         return projectConfiguration;
     }
 
@@ -41,7 +51,7 @@ class ConfigParser {
         List<Step> steps = yamlSteps.collect { k, v ->
             Step step = new Step(name: k)
 
-            // a step can have one or more commands to execute    
+            // a step can have one or more commands to execute
             v.each {
                 step.commands.add(it);
             }
@@ -54,25 +64,41 @@ class ConfigParser {
         def services = [];
 
         steps.each {
-            def instance = getServiceClass(it.capitalize())?.newInstance()
-            services.add(instance)
+            def service = it.tokenize(':')
+            def version = service.size() == 2 ? service.get(1) : LATEST
+            def instance = getServiceClass(service.get(0).capitalize())?.newInstance()
+
+            services.add([service: instance, version: version])
         };
 
-        services.add(new Base());
+        services.add([service: new Base(), version: LATEST]);
 
         return services
     }
 
     static def getServiceClass(def name) {
+        // TODO: Refactor this
         switch(name) {
             case "Postgres":
                 return Postgres
+                break
+            case "Postgis":
+                return Postgis
                 break
             case "Redis":
                 return Redis
                 break
             case "Mssql":
                 return Mssql
+                break
+            case "Mysql":
+                return Mysql
+                break
+            case "Mongodb":
+                return Mongodb
+                break
+            case "Elasticsearch":
+                return Elasticsearch
                 break
         }
     }

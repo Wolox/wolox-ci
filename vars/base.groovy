@@ -1,11 +1,14 @@
 @Library('wolox-ci')
 import com.wolox.*;
 
-def call(ProjectConfiguration projectConfig, def nextClosure) {
+def call(ProjectConfiguration projectConfig, def _, def nextClosure) {
     return { variables ->
-
-        withEnv(projectConfig.environment) {
-            nextClosure(variables)
+        timeout(time: projectConfig.timeout, unit: 'SECONDS') {
+            withEnv(projectConfig.environment) {
+                wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
+                    nextClosure(variables)
+                }
+            }
         }
     }
 }

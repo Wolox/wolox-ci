@@ -1,5 +1,6 @@
 package com.wolox;
 
+import com.wolox.docker.DockerConfiguration;
 import com.wolox.steps.Steps;
 
 class ProjectConfiguration {
@@ -9,4 +10,7 @@ class ProjectConfiguration {
     def dockerfile;
     def projectName;
     def buildNumber;
+    DockerConfiguration dockerConfiguration;
+    def env;
+    def timeout;
 }

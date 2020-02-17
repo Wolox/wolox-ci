@@ -23,7 +23,7 @@ This file looks something like this:
 ```
 config:
   dockerfile: .woloxci/Dockerfile
-  project_name: svl-products-rails
+  project_name: some-rails-project
 
 services:
   - mssql
@@ -48,6 +48,8 @@ environment:
   GIT_COMMITTER_NAME: a
   GIT_COMMITTER_EMAIL: b
   LANG: C.UTF-8
+
+timeout: 600
 ```
 
 This file has different sections:
@@ -64,16 +66,16 @@ This section lists the project's dependencies. Each section will define and expo
 
 ### Microsoft SQL
 
-When listing `mssql` as a service, this will build a docker image from `microsoft/mssql-server-linux` exposing the following environment variables:
+When listing `mssql` as a service, this will build a docker image from [`microsoft/mssql-server-linux`](https://hub.docker.com/r/microsoft/mssql-server-linux/) exposing the following environment variables:
 
 1. DB_USERNAME
 2. DB_PASSWORD
 3. DB_HOST
 4. DB_PORT
 
-### Postgres
+### PostgreSQL
 
-When listing `postgres` as a service, this will build a docker image from `postgres` exposing the following environment variables:
+When listing `postgres` as a service, this will build a docker image from [`postgres`](https://hub.docker.com/_/postgres/) exposing the following environment variables:
 
 1. DB_USERNAME
 2. DB_PASSWORD
@@ -82,9 +84,33 @@ When listing `postgres` as a service, this will build a docker image from `postg
 
 ### Redis
 
-When listing `redis` as a service, this will build a docker image from `redis` exposing the following environment variables:
+When listing `redis` as a service, this will build a docker image from [`redis`](https://hub.docker.com/_/redis/) exposing the following environment variables:
 
 1. REDIS_URL: the redis url that looks like this `redis://redis`
+
+### MySQL
+
+When listing `mysql` as a service, this will build a docker image from [`mysql`](https://hub.docker.com/_/mysql/) exposing the following environment variables:
+
+1. DB_USERNAME
+2. DB_PASSWORD
+3. DB_HOST
+4. DB_PORT
+
+### MongoDB
+
+When listing `mongo` as a service, this will build a docker image from [`mongo`](https://hub.docker.com/_/mongo/) exposing the following environment variables:
+
+1. DB_USERNAME
+2. DB_PASSWORD
+3. DB_HOST
+4. DB_PORT
+
+### Elasticsearch
+
+When listing `elasticsearch:6.4.0` as a service (it's mandatory specify the image version), this will build a docker image from [`elasticsearch`](https://www.docker.elastic.co/) exposing the following environment variables:
+
+1. ELASTICSEARCH_URL
 
 ## Steps
 
@@ -106,3 +132,7 @@ The analysis stage, for example, runs the following commands:
 ## Environment
 
 This section lets you set up custom environment variables. Each item inside this section defines a variable with its value.
+
+## Timeout
+
+This section lets you set up a custom timeout in seconds. The default is 600 (10 minutes).
