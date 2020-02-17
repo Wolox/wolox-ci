@@ -7,7 +7,7 @@ def call(ProjectConfiguration projectConfig, def version, def nextClosure) {
         docker.image("postgres:${version}").withRun() { db ->
             withEnv(['DB_USERNAME=postgres', 'DB_PASSWORD=', "DB_HOST=db", "DB_PORT=5432"]) {
                 variables.db = db;
-                sleep 30
+                sleep(90, "SECONDS")
                 nextClosure(variables)
             }
         }
