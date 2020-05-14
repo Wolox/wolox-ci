@@ -49,6 +49,9 @@ environment:
   GIT_COMMITTER_EMAIL: b
   LANG: C.UTF-8
 
+jenkinsEnvironment:
+  - JENKINS_URL
+
 timeout: 600
 ```
 
@@ -132,6 +135,17 @@ The analysis stage, for example, runs the following commands:
 ## Environment
 
 This section lets you set up custom environment variables. Each item inside this section defines a variable with its value.
+
+## Jenkins Environment
+
+This section lets you define what Jenkins environment values you want to pass to the docker image, i.e. JENKINS_URL.
+Bear in mind that, for convenience, Wolox CI already passes the following Jenkins Environment Variables to the Docker image by default:
+
+1. BUILD_ID
+2. BRANCH_NAME
+3. CHANGE_ID
+4. CHANGE_BRANCH (if job is PR-triggered)
+5. CHANGE_TARGET (if job is PR-triggered)
 
 ## Timeout
 
