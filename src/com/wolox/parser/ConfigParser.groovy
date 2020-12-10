@@ -41,7 +41,7 @@ class ConfigParser {
 
     static def parseEnvironment(def environment) {
         if (!environment) {
-            return "";
+            return [];
         }
 
         return environment.collect { k, v -> "${k}=${v}"};
